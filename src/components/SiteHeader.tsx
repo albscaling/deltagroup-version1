@@ -74,7 +74,14 @@ export function SiteHeader() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               {langs.map((l) => (
-                <DropdownMenuItem key={l.code} onClick={() => setLang(l.code)}>
+                <DropdownMenuItem
+                  key={l.code}
+                  onSelect={(e) => {
+                    e.preventDefault();
+                    setLang(l.code);
+                  }}
+                  className={lang === l.code ? "font-semibold text-accent" : ""}
+                >
                   <span className="mr-2">{l.flag}</span> {l.label}
                 </DropdownMenuItem>
               ))}

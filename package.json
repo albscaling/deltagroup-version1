@@ -6,11 +6,12 @@
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
-  "postbuild": "node ./scripts/generate-index.cjs",
+    "postbuild": "node ./scripts/generate-index.cjs",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "build:vercel": "vite build --config vite.vercel.config.ts"
   },
   "dependencies": {
     "@cloudflare/vite-plugin": "^1.25.5",

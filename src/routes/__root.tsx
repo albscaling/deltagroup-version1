@@ -101,17 +101,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        {children}
-        <Scripts />
-      </body>
-    </html>
-  );
+  // In SPA/Vercel mode the HTML shell is already provided by index.html — just pass through.
+  // (In SSR/Cloudflare mode this component is replaced by the server renderer.)
+  return <>{children}</>;
 }
 
 function RootComponent() {

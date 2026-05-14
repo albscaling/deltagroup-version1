@@ -101,8 +101,24 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: React.ReactNode }) {
-  // In SPA/Vercel mode the HTML shell is already provided by index.html — just pass through.
-  // (In SSR/Cloudflare mode this component is replaced by the server renderer.)
+  // In SSR / dev mode (import.meta.env.SSR = true) we must render the full HTML shell so
+  // HeadContent injects the stylesheet and Scripts injects runtime JS.
+  // In SPA / Vercel mode (browser bundle) index.html already provides <html><head><body>,
+  // so we just pass through — otherwise the browser strips the duplicate tags and breaks
+  // Radix portal event handling (dropdowns, dialogs, etc.).
+  if (import.meta.env.SSR) {
+    return (
+      <html lang="en">
+        <head>
+          <HeadContent />
+        </head>
+        <body>
+          {children}
+          <Scripts />
+        </body>
+      </html>
+    );
+  }
   return <>{children}</>;
 }
 

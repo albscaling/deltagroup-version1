@@ -25,14 +25,6 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   const { t, lang } = useI18n();
 
-  const cats = [
-    { key: "kitchen", img: kitchen, label: t("cats.kitchen") },
-    { key: "bedroom", img: bedroom, label: t("cats.bedroom") },
-    { key: "living", img: living, label: t("cats.living") },
-    { key: "office", img: office, label: t("cats.office") },
-    { key: "custom", img: custom, label: t("cats.custom") },
-  ];
-
   const why = [
     { Icon: Award, title: t("why.q1.title"), body: t("why.q1.body") },
     { Icon: Sparkles, title: t("why.q2.title"), body: t("why.q2.body") },
@@ -109,29 +101,38 @@ function HomePage() {
         </div>
       </section>
 
-      {/* CATEGORIES */}
+      {/* CATALOGUE GALLERY */}
       <section className="container-x py-20">
         <div className="text-center max-w-2xl mx-auto mb-16">
           <div className="eyebrow mb-4">{t("cats.eyebrow")}</div>
           <h2 className="font-display text-4xl md:text-5xl">{t("cats.title")}</h2>
         </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {cats.map((c, i) => (
-            <Link
-              to="/products"
-              key={c.key}
-              className={`group relative aspect-[4/5] overflow-hidden rounded-sm hover-lift ${i === 0 ? "lg:row-span-2 lg:aspect-auto" : ""}`}
+
+        {/* Masonry-style photo grid — all catalogue images, no category labels */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+          {[kitchen, bedroom, living, office, custom, hero, factory].map((img, i) => (
+            <div
+              key={i}
+              className={`overflow-hidden rounded-sm bg-muted ${
+                i === 0 ? "col-span-2 row-span-2" : i === 5 ? "col-span-2" : ""
+              }`}
             >
-              <img src={c.img} alt={c.label} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/10 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-6 text-primary-foreground">
-                <div className="font-display text-2xl">{c.label}</div>
-                <div className="mt-1 text-xs uppercase tracking-widest opacity-80 flex items-center gap-2">
-                  {t("products.viewDetails")} <ArrowRight className="h-3 w-3" />
-                </div>
-              </div>
-            </Link>
+              <img
+                src={img}
+                alt="Delta Group catalogue"
+                loading="lazy"
+                className="h-full w-full object-cover aspect-square transition-transform duration-700 hover:scale-105"
+              />
+            </div>
           ))}
+        </div>
+
+        <div className="flex justify-center mt-12">
+          <Button asChild size="lg" className="rounded-full px-12 h-14 text-base">
+            <Link to="/products">
+              {t("hero.cta1")} <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+          </Button>
         </div>
       </section>
 
